@@ -122,7 +122,7 @@ The system improves communication between users and IT teams, enabling faster re
 ## Screenshots
 
 > *(Replace with actual image links or add screenshots in a `/screenshots` folder and use Markdown image syntax)*
-  ![AdminDashboard](./screeenshots/admin.png)
+  ![FormFill](screenshots/Form.png)
 - **Figure 1:** Admin View  
 - **Figure 2:** Ticket Detail  
 - **Figure 3:** Ticket Submission Form  
