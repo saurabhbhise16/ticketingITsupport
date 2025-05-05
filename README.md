@@ -123,7 +123,6 @@ The system improves communication between users and IT teams, enabling faster re
 
 > *(Replace with actual image links or add screenshots in a `/screenshots` folder and use Markdown image syntax)*
   ![FormFill](screenshots/Form.png)
-- **Figure 1:** Admin View  
-- **Figure 2:** Ticket Detail  
-- **Figure 3:** Ticket Submission Form  
-- **Figure 4:** Ticket Status Update Interface  
+![AdminPage](screenshots/admin.PNG)
+![Detail](screenshots/dashboard.png)
+![StatusUpdate](screenshots/statis.png)
