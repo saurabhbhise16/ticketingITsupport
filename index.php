@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     issue_type VARCHAR(100) NOT NULL,
                     message TEXT,
                     priority VARCHAR(20) NOT NULL,
+                    status ENUM('Open', 'In Progress', 'Closed') DEFAULT 'Open',
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )";
                 if (!$conn->query($createTableSql)) {
