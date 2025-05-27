@@ -25,7 +25,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             else{
 
             // Prepare statement
-            $stmt = $conn->prepare("INSERT INTO tickets (name, email, issue_type, message, priority) VALUES (?, ?, ?, ?,?)");
+            // Check if the table exists, if not, create it
+            $tableCheck = $conn->query("SHOW TABLES LIKE 'tickets'");
+            if ($tableCheck->num_rows == 0) {
+                $createTableSql = "CREATE TABLE tickets (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL,
+                    issue_type VARCHAR(100) NOT NULL,
+                    message TEXT,
+                    priority VARCHAR(20) NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )";
+                if (!$conn->query($createTableSql)) {
+                    $error = "❌ Error creating table: " . $conn->error;
+                }
+            }
+
+            $stmt = $conn->prepare("INSERT INTO tickets (name, email, issue_type, message, priority) VALUES (?, ?, ?, ?, ?)");
 
             if(!$stmt){
                 $error = "Prepare failed: " . $conn->error;
