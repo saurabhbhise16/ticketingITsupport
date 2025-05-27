@@ -4,7 +4,7 @@
 
 <table border="1" cellpadding="5">
     <tr>
-        <th>ID</th><th>Name</th><th>Issue</th><th>Priority</th><th>Status</th><th>Created</th><th>Action</th>
+        <th>ID</th><th>Name</th><th>Issue</th><th>Priority</th><th>Status</th><th>Created</th><th>Action</th><th>Delete</th>
     </tr>
 
 <?php
@@ -18,6 +18,7 @@ while($row = $result->fetch_assoc()) {
         <td>{$row['status']}</td>
         <td>{$row['created_at']}</td>
         <td><a href='view_ticket.php?id={$row['id']}'>View</a></td>
+        <td><a href='delete_ticket.php?id={$row['id']}'>Delete</a></td>
     </tr>";
 }
 ?>
