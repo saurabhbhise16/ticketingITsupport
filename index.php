@@ -1,35 +1,64 @@
 <?php include 'db.php'; ?>
 
 <?php
+
+$error = "";
+$success = "";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $issue_type = $_POST['issue_type'];
-    $message = $_POST['message'];
 
-    // Prepare statement
-    $stmt = $conn->prepare("INSERT INTO tickets (name, email, issue_type, message) VALUES (?, ?, ?, ?)");
+    if (isset($_POST['name'], $_POST['email'], $_POST['issue_type'], $_POST['priority'], $_POST['message'])) {
 
-    // Check for errors in prepare
-    if (!$stmt) {
-        die("Prepare failed: " . $conn->error);
+        if (empty($_POST['priority'])) {
+            $error = "❌ Error: Priority is required.";
+        }
+        else{
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $issue_type = $_POST['issue_type'];
+            $priority = $_POST['priority']; 
+            $message = $_POST['message'];
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error = "❌ Error: Invalid email format.";
+            }
+            else{
+
+            // Prepare statement
+            $stmt = $conn->prepare("INSERT INTO tickets (name, email, issue_type, message, priority) VALUES (?, ?, ?, ?,?)");
+
+            if(!$stmt){
+                $error = "Prepare failed: " . $conn->error;
+            } else {
+
+                $stmt->bind_param("sssss",$name, $email, $issue_type, $message, $priority);
+                $stmt->execute();
+
+                if ($stmt->affected_rows > 0) {
+                    header("Location: " . $_SERVER['PHP_SELF'] . "?success=1");
+                    exit();
+                } else {
+                    $error = "❌ Failed to submit ticket.";
+                }
+                $stmt->close();
+            }
+        }
+    } 
     }
-
-    // Bind and execute
-    $stmt->bind_param("ssss", $name, $email, $issue_type, $message);
-    $stmt->execute();
-
-    if ($stmt->affected_rows > 0) {
-        echo "✅ Ticket submitted successfully!";
-    } else {
-        echo "❌ Failed to submit ticket.";
-    }
-
-    $stmt->close();
 }
+    
 ?>
 
 <h2>Submit a Support Ticket</h2>
+
+<?php if ($error): ?>
+    <p style = "color: red;"><?php echo $error; ?></p>
+<?php endif; ?>
+
+<?php if (isset($_GET['success'])): ?>
+    <p style="color: green;">✅ Ticket submitted successfully!</p>
+<?php endif; ?>
+
 <form method="post">
     Name: <input type="text" name="name" required><br>
     Email: <input type="email" name="email" required><br>
@@ -39,7 +68,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <option>Printer Support</option>
         <option>Network</option>
     </select><br>
+    Priority Type:
+    <select name="priority" required>
+        <option value="" disabled selected>-- Select Priority --</option>
+        <option>High</option>
+        <option>Medium</option>
+        <option>Low</option>
+    </select><br>
+
     Message:<br>
     <textarea name="message" rows="5" cols="30"></textarea><br>
     <input type="submit" value="Submit Ticket">
 </form>
+<br><a href='admin.php?id={$row['id']}'>Back to Admin</a></br>

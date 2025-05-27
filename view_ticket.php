@@ -14,6 +14,7 @@ $ticket = $conn->query("SELECT * FROM tickets WHERE id=$id")->fetch_assoc();
 <p><strong>Name:</strong> <?= $ticket['name'] ?></p>
 <p><strong>Email:</strong> <?= $ticket['email'] ?></p>
 <p><strong>Issue:</strong> <?= $ticket['issue_type'] ?></p>
+<p><strong>Priority:</strong> <?=$ticket['Priority'] ?></p>
 <p><strong>Message:</strong> <?= nl2br($ticket['message']) ?></p>
 <p><strong>Status:</strong> <?= $ticket['status'] ?></p>
 
