@@ -1,0 +1,2 @@
+CREATE TABLE IT_wrkrs (Id INTEGER PRIMARY KEY, Name VARCHAR(100));
+INSERT INTO IT_wrkrs VALUES (1, 'A'), (2, 'B'), (3, 'C');
