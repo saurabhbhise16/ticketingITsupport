@@ -128,4 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <textarea name="message" rows="5" cols="30"></textarea><br>
     <input type="submit" value="Submit Ticket">
 </form>
-<br><a href='admin.php'>Back to Admin</a></br>
+diya_bhat
+<br><a href='admin.php?id={$row['id']}'>Back to Admin</a></br>
+
+<script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2025/06/03/04/20250603040323-KED2C522.js"></script>
+
